@@ -6,11 +6,13 @@
     "description": "",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts",
     "scripts": {
         "clear": "rimraf dist",
         "build-esm": "tsc --project tsconfig.esm.json",
         "build-cjs": "tsc --project tsconfig.cjs.json",
-        "build": "pnpm run clear && (pnpm run build-esm & pnpm run build-cjs)",
+        "build-types": "tsc --project tsconfig.types.json",
+        "build": "pnpm run clear && (pnpm run build-esm & pnpm run build-cjs & pnpm run build-types)",
         "prepare": "pnpm run build"
     },
     "keywords": [],

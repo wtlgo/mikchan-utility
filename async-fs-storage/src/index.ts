@@ -17,7 +17,8 @@ class AsyncFsStorage implements AsyncStorage {
         try {
             const { path } = await this._fsIndex.getMeta(key);
             return await this._fs.read(path);
-        } catch (_) {
+        } catch (e) {
+            console.error(e);
             return null;
         }
     }
@@ -39,7 +40,9 @@ class AsyncFsStorage implements AsyncStorage {
                     this._fsIndex.saveMeta(key, value),
                 ]);
             }
-        } catch (_) {}
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async removeItem(key: string): Promise<void> {
@@ -49,13 +52,16 @@ class AsyncFsStorage implements AsyncStorage {
                 this._fs.remove(path),
                 this._fsIndex.removeMeta(key),
             ]);
-        } catch (_) {}
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async getAllKeys(): Promise<string[]> {
         try {
             return await this._fsIndex.getAllKeys();
-        } catch (_) {
+        } catch (e) {
+            console.error(e);
             return [];
         }
     }
@@ -64,7 +70,9 @@ class AsyncFsStorage implements AsyncStorage {
         try {
             const keys = await this.getAllKeys();
             await Promise.all(keys.map(this.removeItem));
-        } catch (_) {}
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
 
