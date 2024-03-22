@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@mikchan-utility/async-fs-storage-interface':
-    specifier: ^1.0.1
+    specifier: ^2.0.0
     version: link:../async-fs-storage-interface
 
 devDependencies:

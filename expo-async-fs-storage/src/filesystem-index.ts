@@ -6,6 +6,7 @@ import { createKeyGenertor, KeyGenerator } from "./key-generator";
 import { getKeyIndex, KeyIndexManager } from "./key-index";
 import { ExpoFilesystem } from "./filesystem";
 import { hash } from "./hash";
+import { randomUUID } from "expo-crypto";
 
 export class ExpoFileSystemIndex implements FileSystemIndex {
     private readonly _keyGenerator: KeyGenerator;
@@ -16,51 +17,81 @@ export class ExpoFileSystemIndex implements FileSystemIndex {
         this._keyIndex = getKeyIndex(fs);
     }
 
-    async getMeta(
+    async get(
         key: string,
         value?: string | null | undefined,
-    ): Promise<FileMeta> {
+    ): Promise<FileMeta | null> {
         const gkey = this._keyGenerator.generate(key);
-        let keyIndex = await this._keyIndex.get();
+        let res: FileMeta | null = null;
 
-        if (!(gkey in keyIndex)) {
-            keyIndex = await this._keyIndex.edit(async (editKeyIndex) => {
-                editKeyIndex[gkey] = KeyIndexManager.createDefaultKeyValue();
-            });
-        }
+        await this._keyIndex.with(async (keyIndex) => {
+            const val = keyIndex[gkey];
 
-        const { filename, hash: hashValue } = keyIndex[gkey];
-
-        let shouldWrite = true;
-        if (value) {
-            shouldWrite = !hashValue || hashValue !== (await hash(value));
-        }
-
-        return {
-            path: filename,
-            shouldWrite,
-        };
-    }
-
-    async saveMeta(key: string, value: string): Promise<void> {
-        const gkey = this._keyGenerator.generate(key);
-        await this._keyIndex.edit(async (keyIndex) => {
-            if (gkey in keyIndex) {
-                keyIndex[gkey].hash = await hash(value);
+            if (val) {
+                res = {
+                    path: val.filename,
+                    shouldWrite:
+                        !value || !val.hash || val.hash !== (await hash(value)),
+                };
             }
+
+            return "pass";
         });
+
+        return res;
     }
 
-    async removeMeta(key: string): Promise<void> {
+    async edit(
+        key: string,
+        value: string | null | undefined,
+        callback: (
+            meta: FileMeta,
+        ) => Promise<
+            void | { action: "set"; value: string } | { action: "remove" }
+        >,
+    ): Promise<void> {
         const gkey = this._keyGenerator.generate(key);
-        await this._keyIndex.edit(async (keyIndex) => {
-            delete keyIndex[gkey];
+        await this._keyIndex.with(async (keyIndex) => {
+            if (!keyIndex[gkey]) {
+                keyIndex[gkey] = { filename: randomUUID() };
+            }
+
+            const meta = {
+                path: keyIndex[gkey].filename,
+                shouldWrite:
+                    !value ||
+                    !keyIndex[gkey].hash ||
+                    keyIndex[gkey].hash !== (await hash(value)),
+            };
+
+            const res = await callback(meta);
+            if (!res) {
+                return "pass";
+            }
+
+            switch (res.action) {
+                case "set": {
+                    if (value) keyIndex[gkey].hash = await hash(value);
+                    break;
+                }
+
+                case "remove": {
+                    delete keyIndex[gkey];
+                }
+            }
+
+            return "save";
         });
     }
 
     async getAllKeys(): Promise<string[]> {
-        const keyIndex = await this._keyIndex.get();
-        const keys = Object.keys(keyIndex);
-        return this._keyGenerator.filter(keys);
+        const keys: string[] = [];
+
+        await this._keyIndex.with(async (keyIndex) => {
+            keys.push(...this._keyGenerator.filter(Object.keys(keyIndex)));
+            return "pass";
+        });
+
+        return keys;
     }
 }

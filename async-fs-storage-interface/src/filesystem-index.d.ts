@@ -1,7 +1,18 @@
 import { FileMeta } from "./file-meta";
+
 export interface FileSystemIndex {
-    getMeta(key: string, value?: string | undefined | null): Promise<FileMeta>;
-    saveMeta(key: string, value: string): Promise<void>;
-    removeMeta(key: string): Promise<void>;
+    get(
+        key: string,
+        value?: string | undefined | null,
+    ): Promise<FileMeta | null>;
+    edit(
+        key: string,
+        value: string | undefined | null,
+        callback: (
+            meta: FileMeta,
+        ) => Promise<
+            { action: "set"; value: string } | { action: "remove" } | void
+        >,
+    ): Promise<void>;
     getAllKeys(): Promise<string[]>;
 }
