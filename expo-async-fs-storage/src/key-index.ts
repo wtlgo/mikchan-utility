@@ -58,7 +58,7 @@ class KeyIndexStore {
             this._store[fs.rootPath] = new KeyIndexManager(fs);
         }
 
-        return this._store.fs;
+        return this._store[fs.rootPath];
     }
 }
 
