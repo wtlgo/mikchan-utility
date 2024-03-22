@@ -1,19 +1,13 @@
 {
     "name": "@mikchan-utility/async-fs-storage-interface",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "George Endo",
     "license": "MIT",
     "description": "",
-    "types": "./dist/index.d.ts",
-    "scripts": {
-        "clear": "rimraf dist",
-        "build": "pnpm run clear && tsc",
-        "prepare": "pnpm run build"
-    },
+    "types": "./src/index.d.ts",
     "keywords": [],
     "devDependencies": {
         "prettier": "^3.2.5",
-        "rimraf": "^5.0.5",
         "typescript": "^5.4.3"
     },
     "packageManager": "pnpm@8.15.5"
