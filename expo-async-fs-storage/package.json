@@ -1,0 +1,34 @@
+{
+    "name": "@mikchan-utility/expo-async-fs-storage",
+    "version": "0.0.0-dev",
+    "author": "George Endo",
+    "license": "MIT",
+    "description": "",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "scripts": {
+        "clear": "rimraf dist",
+        "build-esm": "tsc --project tsconfig.esm.json",
+        "build-cjs": "tsc --project tsconfig.cjs.json",
+        "build": "pnpm run clear && (pnpm run build-esm & pnpm run build-cjs)",
+        "prepare": "pnpm run build"
+    },
+    "keywords": [],
+    "dependencies": {
+        "@mikchan-utility/async-fs-storage": "0.0.1-dev",
+        "async-mutex": "^0.5.0",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "expo-crypto": "^12.8.1",
+        "expo-file-system": "^16.0.8",
+        "prettier": "^3.2.5",
+        "rimraf": "^5.0.5",
+        "typescript": "^5.4.3"
+    },
+    "packageManager": "pnpm@8.15.5",
+    "peerDependencies": {
+        "expo-crypto": "^12.8.1",
+        "expo-file-system": "^16.0.8"
+    }
+}
