@@ -15,7 +15,8 @@ export class ExpoFilesystem implements FileSystem {
         const filePath = `${this.rootPath}/${path}`;
         try {
             return await FS.readAsStringAsync(filePath);
-        } catch (_) {
+        } catch (e) {
+            console.error(e);
             return null;
         }
     }
@@ -24,13 +25,17 @@ export class ExpoFilesystem implements FileSystem {
         const filePath = `${this.rootPath}/${path}`;
         try {
             await FS.writeAsStringAsync(filePath, value);
-        } catch (_) {}
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async remove(path: string): Promise<void> {
         const filePath = `${this.rootPath}/${path}`;
         try {
             await FS.deleteAsync(filePath);
-        } catch (_) {}
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
