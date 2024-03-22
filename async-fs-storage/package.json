@@ -1,6 +1,6 @@
 {
     "name": "@mikchan-utility/async-fs-storage",
-    "version": "0.0.1-dev",
+    "version": "1.0.0",
     "author": "George Endo",
     "license": "MIT",
     "description": "",
@@ -15,6 +15,7 @@
     },
     "keywords": [],
     "devDependencies": {
+        "@mikchan-utility/async-fs-storage-interface": "1.0.0",
         "prettier": "^3.2.5",
         "rimraf": "^5.0.5",
         "typescript": "^5.4.3"

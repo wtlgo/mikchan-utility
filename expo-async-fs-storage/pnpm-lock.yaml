@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@mikchan-utility/async-fs-storage':
     specifier: 0.0.1-dev
-    version: link:../async-fs-storage
+    version: 0.0.1-dev
   async-mutex:
     specifier: ^0.5.0
     version: 0.5.0
@@ -1951,6 +1951,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
+
+  /@mikchan-utility/async-fs-storage@0.0.1-dev:
+    resolution: {integrity: sha512-KQcoouj0xsbPi+SANFhfvxiz41kvFiUTAFRN7ERN8bcwVPAbhZeCfvQtVLO7kQnN4BgFZbSQrvSCg3ddL7o34Q==}
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
