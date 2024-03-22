@@ -15,7 +15,7 @@ export class KeyIndexManager {
     private async _get(): Promise<KeyIndex> {
         if (!this._keyIndex) {
             try {
-                const strData = (await this._fs.read(".keys")) ?? "";
+                const strData = (await this._fs.read(".keys")) ?? "{}";
                 this._keyIndex = await keyIndexSchema.parseAsync(
                     JSON.parse(strData),
                 );
@@ -28,14 +28,16 @@ export class KeyIndexManager {
     }
 
     async get(): Promise<KeyIndex> {
-        return this._mutex.runExclusive(this._get);
+        return await this._mutex.runExclusive(this._get);
     }
 
-    async edit(callback: (keyIndex: KeyIndex) => Promise<void>) {
-        return this._mutex.runExclusive(async () => {
+    async edit(
+        callback: (keyIndex: KeyIndex) => Promise<void>,
+    ): Promise<KeyIndex> {
+        return await this._mutex.runExclusive(async () => {
             const keyIndex = await this._get();
             await callback(keyIndex);
-            await this._fs.write(".key", JSON.stringify(keyIndex));
+            await this._fs.write(".keys", JSON.stringify(keyIndex));
             this._keyIndex = keyIndex;
             return this._keyIndex;
         });
