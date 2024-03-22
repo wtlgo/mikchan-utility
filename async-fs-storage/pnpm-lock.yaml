@@ -4,10 +4,12 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-devDependencies:
+dependencies:
   '@mikchan-utility/async-fs-storage-interface':
-    specifier: 1.0.0
-    version: 1.0.0
+    specifier: ^1.0.1
+    version: link:../async-fs-storage-interface
+
+devDependencies:
   prettier:
     specifier: ^3.2.5
     version: 3.2.5
@@ -30,10 +32,6 @@ packages:
       strip-ansi-cjs: /strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: /wrap-ansi@7.0.0
-    dev: true
-
-  /@mikchan-utility/async-fs-storage-interface@1.0.0:
-    resolution: {integrity: sha512-ZT3vLKwxRtXwozfeW2J6f0X9sEoVtfynbpo0pIWng81WAF8uJ6dqt12zlHCqcMeZOY/2xHd/gHngBPoWiiGD8A==}
     dev: true
 
   /@pkgjs/parseargs@0.11.0:

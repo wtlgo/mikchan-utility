@@ -1,4 +1,4 @@
-import { FileSystem } from "@mikchan-utility/async-fs-storage";
+import { FileSystem } from "@mikchan-utility/async-fs-storage-interface";
 import * as FS from "expo-file-system";
 
 export class ExpoFilesystem implements FileSystem {

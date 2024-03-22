@@ -1,4 +1,7 @@
-import { FileMeta, FileSystemIndex } from "@mikchan-utility/async-fs-storage";
+import {
+    FileMeta,
+    FileSystemIndex,
+} from "@mikchan-utility/async-fs-storage-interface";
 import { createKeyGenertor, KeyGenerator } from "./key-generator";
 import { getKeyIndex, KeyIndexManager } from "./key-index";
 import { ExpoFilesystem } from "./filesystem";

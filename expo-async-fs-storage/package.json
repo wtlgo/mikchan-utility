@@ -1,6 +1,6 @@
 {
     "name": "@mikchan-utility/expo-async-fs-storage",
-    "version": "0.0.0-dev",
+    "version": "1.0.1",
     "author": "George Endo",
     "license": "MIT",
     "description": "",
@@ -15,7 +15,8 @@
     },
     "keywords": [],
     "dependencies": {
-        "@mikchan-utility/async-fs-storage": "0.0.1-dev",
+        "@mikchan-utility/async-fs-storage": "^1.0.1",
+        "@mikchan-utility/async-fs-storage-interface": "^1.0.1",
         "async-mutex": "^0.5.0",
         "zod": "^3.22.4"
     },
